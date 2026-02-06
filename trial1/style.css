@@ -33,95 +33,59 @@ body::before {
     transition: background 0.1s ease;
 }
 
-/* --- 1. SENSORY INTRO: THE HOT BOX --- */
-#intro-sequence {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+/* --- 1. VIDEO INTRO LAYER --- */
+#video-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: #000;
     z-index: 9999;
-    display: flex; align-items: center; justify-content: center;
-    /* Clean exit */
-    animation: fadeOut 0.8s ease-in-out 4s forwards;
+    transition: opacity 1s ease-out, visibility 1s;
+}
+
+#video-overlay video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures video fills screen without stretching */
+}
+
+/* Hidden state for JS to toggle */
+#video-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
     pointer-events: none;
 }
-@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-.intro-center { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; }
-
-/* The Box */
-.mystery-box {
-    width: 100px; height: 100px;
-    position: relative;
-    z-index: 10;
-    animation: boxShake 2s ease-in-out forwards, boxOpen 0.5s ease-out 2s forwards;
+/* Skip Button */
+#skip-btn {
+    position: absolute;
+    bottom: 30px; right: 30px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 30px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    transition: 0.3s;
 }
-
-.box-body {
-    width: 100%; height: 100%;
-    background: linear-gradient(135deg, #e84118, #c23616);
-    border-radius: 10px;
-    box-shadow: 0 0 50px rgba(232, 65, 24, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.glow-core {
-    position: absolute; top: 50%; left: 50%;
-    width: 0%; height: 0%;
-    background: #fff;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 50px #ffa502;
-    /* The Heat Explosion */
-    animation: heatExplode 1s cubic-bezier(0, 0.9, 0.57, 1) 2.1s forwards;
-}
-
-/* Steam Animation */
-.steam-container { position: absolute; top: -50px; left: 0; width: 100%; height: 100%; pointer-events: none; }
-.steam {
-    position: absolute; bottom: 50%; left: 50%;
-    width: 20px; height: 20px;
-    background: #fff;
-    border-radius: 50%;
-    filter: blur(8px);
-    opacity: 0;
-}
-/* Individual Steam Particles */
-.s1 { animation: rise 2s ease-out 2.2s forwards; left: 45%; }
-.s2 { animation: rise 2.5s ease-out 2.3s forwards; left: 55%; width: 30px; }
-.s3 { animation: rise 2.2s ease-out 2.4s forwards; left: 40%; width: 15px; }
-
-@keyframes boxShake {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-5deg) scale(1.05); }
-    75% { transform: rotate(5deg) scale(1.05); }
-}
-@keyframes heatExplode {
-    0% { width: 0; height: 0; opacity: 1; }
-    100% { width: 300%; height: 300%; opacity: 0; }
-}
-@keyframes rise {
-    0% { transform: translateY(0) scale(1); opacity: 0.6; }
-    100% { transform: translateY(-150px) scale(3); opacity: 0; }
-}
-
-.intro-title {
-    position: absolute; bottom: -60px;
-    font-family: 'Playfair Display', serif;
-    color: #fff; font-size: 2.5rem;
-    opacity: 0;
-    animation: fadeUp 1s ease-out 2.5s forwards;
-}
-@keyframes fadeUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+#skip-btn:hover { background: #fff; color: #000; }
 
 
 /* --- 2. MAIN UI: GLASS CARD --- */
 .main-stage {
     perspective: 1000px;
     opacity: 0;
-    /* Enters after intro */
-    animation: uiEnter 1s ease-out 3.5s forwards;
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    transform: scale(0.95);
 }
-@keyframes uiEnter { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+/* Active State triggered by JS after video */
+.main-stage.visible {
+    opacity: 1;
+    transform: scale(1);
+}
 
 .glass-panel {
     width: 850px; height: 500px;
@@ -131,10 +95,9 @@ body::before {
     overflow: hidden;
     position: relative;
     box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-    /* The subtle spotlight logic */
 }
 
-/* This layer follows the mouse inside the card */
+/* Spotlight Layer */
 .spotlight-layer {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle at var(--x) var(--y), rgba(255, 71, 87, 0.08), transparent 40%);
@@ -223,6 +186,6 @@ body::before {
 /* Responsive */
 @media (max-width: 850px) {
     .glass-panel { width: 90%; height: auto; flex-direction: column; }
-    .panel-visual { display: none; } /* Hide visual on mobile for cleaner look */
+    .panel-visual { display: none; } 
     .panel-form { padding: 30px; }
 }

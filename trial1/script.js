@@ -1,13 +1,37 @@
-/* --- 1. MOUSE TRACKING FOR SPOTLIGHT EFFECT --- */
-// We update CSS variables --x and --y based on mouse position
-// This drives the background gradient and the card's internal lighting
+/* --- 1. VIDEO INTRO LOGIC --- */
+const video = document.getElementById('intro-video');
+const videoOverlay = document.getElementById('video-overlay');
+const mainStage = document.getElementById('main-stage');
 
+// Function to handle transition from Video -> UI
+function endIntro() {
+    videoOverlay.classList.add('hidden');
+    mainStage.classList.add('visible');
+    
+    // Stop video to save resources
+    setTimeout(() => {
+        video.pause();
+    }, 1000);
+}
+
+// Event Listener: When video finishes, switch to UI
+video.addEventListener('ended', endIntro);
+
+// Fallback: In case video fails to autoplay
+setTimeout(() => {
+    // Check if video is playing, if not, force intro end
+    if (video.paused && !videoOverlay.classList.contains('hidden')) {
+       // endIntro(); // Optional: uncomment if you want auto-skip on error
+    }
+}, 5000);
+
+
+/* --- 2. MOUSE TRACKING FOR SPOTLIGHT EFFECT --- */
 document.addEventListener('mousemove', (e) => {
     const x = e.clientX;
     const y = e.clientY;
 
     // Update Body Background Spotlight
-    // We map window coordinates to percentage for CSS
     const xPct = (x / window.innerWidth) * 100;
     const yPct = (y / window.innerHeight) * 100;
 
@@ -15,7 +39,6 @@ document.addEventListener('mousemove', (e) => {
     document.body.style.setProperty('--y', `${yPct}%`);
 
     // Update Internal Card Spotlight
-    // We need coordinates relative to the card for the inner glow
     const card = document.getElementById('glass-card');
     const rect = card.getBoundingClientRect();
     const cardX = x - rect.left;
@@ -25,7 +48,8 @@ document.addEventListener('mousemove', (e) => {
     card.style.setProperty('--y', `${cardY}px`);
 });
 
-/* --- 2. FORM SWITCHING LOGIC --- */
+
+/* --- 3. FORM SWITCHING LOGIC --- */
 function switchForm(target) {
     const login = document.getElementById('login-box');
     const signup = document.getElementById('signup-box');
@@ -39,7 +63,8 @@ function switchForm(target) {
     }
 }
 
-/* --- 3. CONFETTI (Celebration) --- */
+
+/* --- 4. CONFETTI (Celebration) --- */
 const canvas = document.getElementById('confetti-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
