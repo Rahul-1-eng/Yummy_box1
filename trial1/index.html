@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yummy Box | Premium Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="intro-sequence">
+        <div class="intro-center">
+            <div class="mystery-box">
+                <div class="lid"></div>
+                <div class="box-body">
+                    <div class="glow-core"></div>
+                </div>
+            </div>
+            
+            <div class="steam-container">
+                <div class="steam s1"></div>
+                <div class="steam s2"></div>
+                <div class="steam s3"></div>
+                <div class="steam s4"></div>
+            </div>
+
+            <h1 class="intro-title">Yummy Box</h1>
+        </div>
+    </div>
+
+    <div class="main-stage" id="main-stage">
+        
+        <div class="glass-panel" id="glass-card">
+            <div class="spotlight-layer"></div>
+
+            <div class="panel-visual">
+                <div class="visual-text">
+                    <h2>Fresh.</h2>
+                    <h2>Hot.</h2>
+                    <h2>Fast.</h2>
+                </div>
+                <div class="circle-decor"></div>
+            </div>
+
+            <div class="panel-form">
+                
+                <div class="brand-header">
+                    <span class="logo-icon">🥡</span>
+                    <h3>Yummy Box.</h3>
+                </div>
+
+                <div class="auth-box active" id="login-box">
+                    <div class="text-group">
+                        <h4>Welcome Back</h4>
+                        <p>Your meal is waiting.</p>
+                    </div>
+
+                    <form onsubmit="event.preventDefault(); triggerConfetti();">
+                        <div class="input-wrap">
+                            <input type="email" required placeholder=" " autocomplete="off">
+                            <label>Email Address</label>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="input-wrap">
+                            <input type="password" required placeholder=" " autocomplete="off">
+                            <label>Password</label>
+                            <div class="line"></div>
+                        </div>
+
+                        <button type="submit" class="chef-btn">
+                            <span>Unlock Flavor</span>
+                        </button>
+
+                        <div class="footer-link">
+                            New taste explorer? <a onclick="switchForm('signup')">Create Account</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="auth-box" id="signup-box">
+                    <div class="text-group">
+                        <h4>Join the Feast</h4>
+                        <p>First delivery is on the house.</p>
+                    </div>
+
+                    <form onsubmit="event.preventDefault(); triggerConfetti();">
+                        <div class="input-wrap">
+                            <input type="text" required placeholder=" " autocomplete="off">
+                            <label>Full Name</label>
+                            <div class="line"></div>
+                        </div>
+                        
+                        <div class="input-wrap">
+                            <input type="email" required placeholder=" " autocomplete="off">
+                            <label>Email Address</label>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="input-wrap">
+                            <input type="password" required placeholder=" " autocomplete="off">
+                            <label>Set Password</label>
+                            <div class="line"></div>
+                        </div>
+
+                        <button type="submit" class="chef-btn">
+                            <span>Start Eating</span>
+                        </button>
+
+                        <div class="footer-link">
+                            Already a member? <a onclick="switchForm('login')">Log In</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>

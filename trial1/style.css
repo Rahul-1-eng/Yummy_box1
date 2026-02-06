@@ -1,0 +1,228 @@
+/* --- RESET & TYPOGRAPHY --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary: #ff4757;       /* Juicy Red */
+    --accent: #ffa502;        /* Golden Crust */
+    --dark: #2f3542;
+    --bg-dark: #1e1e1e;
+    --glass: rgba(255, 255, 255, 0.95);
+    /* Dynamic Mouse Cords */
+    --x: 50%;
+    --y: 50%;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Background Atmosphere (Warm & Appetizing) */
+body::before {
+    content: '';
+    position: absolute;
+    width: 150%; height: 150%;
+    /* Gradient moves with mouse via JS variable --x/--y */
+    background: radial-gradient(circle at var(--x) var(--y), #4b1216 0%, #000000 60%);
+    z-index: -1;
+    transition: background 0.1s ease;
+}
+
+/* --- 1. SENSORY INTRO: THE HOT BOX --- */
+#intro-sequence {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    /* Clean exit */
+    animation: fadeOut 0.8s ease-in-out 4s forwards;
+    pointer-events: none;
+}
+@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+.intro-center { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; }
+
+/* The Box */
+.mystery-box {
+    width: 100px; height: 100px;
+    position: relative;
+    z-index: 10;
+    animation: boxShake 2s ease-in-out forwards, boxOpen 0.5s ease-out 2s forwards;
+}
+
+.box-body {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #e84118, #c23616);
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(232, 65, 24, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.glow-core {
+    position: absolute; top: 50%; left: 50%;
+    width: 0%; height: 0%;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px #ffa502;
+    /* The Heat Explosion */
+    animation: heatExplode 1s cubic-bezier(0, 0.9, 0.57, 1) 2.1s forwards;
+}
+
+/* Steam Animation */
+.steam-container { position: absolute; top: -50px; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.steam {
+    position: absolute; bottom: 50%; left: 50%;
+    width: 20px; height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    filter: blur(8px);
+    opacity: 0;
+}
+/* Individual Steam Particles */
+.s1 { animation: rise 2s ease-out 2.2s forwards; left: 45%; }
+.s2 { animation: rise 2.5s ease-out 2.3s forwards; left: 55%; width: 30px; }
+.s3 { animation: rise 2.2s ease-out 2.4s forwards; left: 40%; width: 15px; }
+
+@keyframes boxShake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg) scale(1.05); }
+    75% { transform: rotate(5deg) scale(1.05); }
+}
+@keyframes heatExplode {
+    0% { width: 0; height: 0; opacity: 1; }
+    100% { width: 300%; height: 300%; opacity: 0; }
+}
+@keyframes rise {
+    0% { transform: translateY(0) scale(1); opacity: 0.6; }
+    100% { transform: translateY(-150px) scale(3); opacity: 0; }
+}
+
+.intro-title {
+    position: absolute; bottom: -60px;
+    font-family: 'Playfair Display', serif;
+    color: #fff; font-size: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 2.5s forwards;
+}
+@keyframes fadeUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+
+/* --- 2. MAIN UI: GLASS CARD --- */
+.main-stage {
+    perspective: 1000px;
+    opacity: 0;
+    /* Enters after intro */
+    animation: uiEnter 1s ease-out 3.5s forwards;
+}
+@keyframes uiEnter { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+.glass-panel {
+    width: 850px; height: 500px;
+    background: #fff;
+    border-radius: 24px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    /* The subtle spotlight logic */
+}
+
+/* This layer follows the mouse inside the card */
+.spotlight-layer {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at var(--x) var(--y), rgba(255, 71, 87, 0.08), transparent 40%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Left Side */
+.panel-visual {
+    flex: 0.8;
+    background: #f8f8f8;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+.visual-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; color: #111; line-height: 1;
+    opacity: 0.1; transform: rotate(-10deg);
+}
+.circle-decor {
+    position: absolute; bottom: -50px; left: -50px;
+    width: 200px; height: 200px;
+    background: var(--accent);
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+}
+
+/* Right Side (Forms) */
+.panel-form { flex: 1.2; padding: 50px; position: relative; z-index: 2; }
+
+.brand-header { display: flex; align-items: center; gap: 10px; margin-bottom: 40px; }
+.logo-icon { font-size: 1.8rem; }
+.brand-header h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #000; }
+
+.auth-box { display: none; animation: slideFade 0.4s ease-out; }
+.auth-box.active { display: block; }
+
+@keyframes slideFade { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+
+.text-group h4 { font-size: 1.8rem; margin-bottom: 5px; color: #111; }
+.text-group p { font-size: 0.9rem; color: #888; margin-bottom: 30px; }
+
+/* Input Styling */
+.input-wrap { position: relative; margin-bottom: 30px; }
+.input-wrap input {
+    width: 100%; padding: 10px 0;
+    border: none; background: transparent;
+    border-bottom: 1px solid #ddd;
+    outline: none; font-size: 1rem; color: #333;
+}
+.input-wrap label {
+    position: absolute; left: 0; top: 10px;
+    color: #aaa; pointer-events: none; transition: 0.3s;
+}
+.input-wrap .line {
+    position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+    background: var(--primary); transition: 0.3s;
+}
+
+/* Floating Label Logic */
+.input-wrap input:focus ~ label,
+.input-wrap input:not(:placeholder-shown) ~ label {
+    top: -20px; font-size: 0.8rem; color: var(--primary);
+}
+.input-wrap input:focus ~ .line { width: 100%; }
+
+/* Chef Button */
+.chef-btn {
+    width: 100%; padding: 16px;
+    background: var(--primary); color: #fff;
+    border: none; border-radius: 8px;
+    font-size: 1rem; font-weight: 500; letter-spacing: 0.5px;
+    cursor: pointer; transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(255, 71, 87, 0.2);
+}
+.chef-btn:hover { background: #d63031; transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 71, 87, 0.4); }
+
+.footer-link { margin-top: 25px; font-size: 0.9rem; color: #888; text-align: center; }
+.footer-link a { color: var(--primary); font-weight: 600; cursor: pointer; margin-left: 5px; text-decoration: none; }
+.footer-link a:hover { text-decoration: underline; }
+
+#confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; width: 100%; height: 100%; z-index: 100; }
+
+/* Responsive */
+@media (max-width: 850px) {
+    .glass-panel { width: 90%; height: auto; flex-direction: column; }
+    .panel-visual { display: none; } /* Hide visual on mobile for cleaner look */
+    .panel-form { padding: 30px; }
+}
