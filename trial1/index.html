@@ -3,110 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yummy Box | Premium Delivery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Yummy Box | Premium Food Delivery</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Link to CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="video-overlay">
-        <video id="intro-video" autoplay muted playsinline>
-            <source src="trial1/French_Fries_Box_Animation_Logo.mp4" type="video/mp4">
-            Your browser does not support HTML5 video.
+    <!-- 1. INTRO LAYER -->
+    <div id="intro-layer">
+        <!-- VIDEO -->
+        <video id="intro-video" muted playsinline>
+            <source src="French_Fries_Box_Animation_Logo.mp4" type="video/mp4">
         </video>
-        <button id="skip-btn" onclick="endIntro()">Skip Intro</button>
+        <!-- CSS FALLBACK -->
+        <div id="css-fallback">
+            <div class="box-3d">
+                <div class="face front">Y</div>
+                <div class="face back"></div>
+                <div class="face left"></div>
+                <div class="face right"></div>
+                <div class="face bottom"></div>
+            </div>
+        </div>
+        <div class="loader-text" id="loader-status">Loading Experience...</div>
     </div>
 
-    <div class="main-stage" id="main-stage">
-        
-        <div class="glass-panel" id="glass-card">
+    <!-- 2. AUTHENTICATION LAYER -->
+    <div id="auth-layer">
+        <div class="auth-card" id="auth-card">
+            <!-- Spotlight effect inside card -->
             <div class="spotlight-layer"></div>
 
-            <div class="panel-visual">
+            <div class="auth-visual">
                 <div class="visual-text">
-                    <h2>Fresh.</h2>
-                    <h2>Hot.</h2>
-                    <h2>Fast.</h2>
+                    <h2>Pure.<br><span>Crave.</span></h2>
                 </div>
-                <div class="circle-decor"></div>
             </div>
+            
+            <div class="auth-form-container">
+                <!-- Login -->
+                <div class="auth-form-box active" id="login-form">
+                    
+                    <!-- NEW PREMIUM HEADER WITH ANIMATIONS -->
+                    <div class="brand-header">
+                        <div class="logo-wrapper">
+                            <h3><i class="fas fa-box-open"></i> Yummy Box.</h3>
+                            <!-- Scooter Orbiting Animation -->
+                            <div class="scooter-orbit-track">
+                                <div class="scooter-mini">🛵💨</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Realistic Licking Animation -->
+                        <div class="sensory-lick">
+                            <div class="tongue-shape"></div>
+                            <div class="drool-drop"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="welcome-text">Login to access your premium dashboard</p>
 
-            <div class="panel-form">
-                
-                <div class="brand-header">
-                    <span class="logo-icon">🥡</span>
-                    <h3>Yummy Box.</h3>
-                </div>
-
-                <div class="auth-box active" id="login-box">
-                    <div class="text-group">
-                        <h4>Welcome Back</h4>
-                        <p>Your meal is waiting.</p>
+                    <div class="social-buttons">
+                        <button class="social-btn google-btn">
+                            <i class="fab fa-google"></i> Continue with Google
+                        </button>
+                        <button class="social-btn apple-btn">
+                            <i class="fab fa-apple"></i> Continue with Apple
+                        </button>
                     </div>
 
-                    <form onsubmit="event.preventDefault(); triggerConfetti();">
+                    <div class="divider">OR</div>
+                    
+                    <form onsubmit="handleLogin(event)">
                         <div class="input-wrap">
                             <input type="email" required placeholder=" " autocomplete="off">
                             <label>Email Address</label>
-                            <div class="line"></div>
                         </div>
-
                         <div class="input-wrap">
                             <input type="password" required placeholder=" " autocomplete="off">
                             <label>Password</label>
-                            <div class="line"></div>
                         </div>
-
-                        <button type="submit" class="chef-btn">
-                            <span>Unlock Flavor</span>
-                        </button>
-
+                        
+                        <button class="chef-btn">Log In</button>
+                        
                         <div class="footer-link">
-                            New taste explorer? <a onclick="switchForm('signup')">Create Account</a>
+                            Not a member? <a onclick="toggleAuth('signup')">Sign Up Now</a>
                         </div>
                     </form>
                 </div>
 
-                <div class="auth-box" id="signup-box">
-                    <div class="text-group">
-                        <h4>Join the Feast</h4>
-                        <p>First delivery is on the house.</p>
+                <!-- Signup -->
+                <div class="auth-form-box" id="signup-form">
+                    <div class="brand-header">
+                        <div class="logo-wrapper">
+                            <h3>Join Us.</h3>
+                            <!-- Scooter Orbiting Animation -->
+                            <div class="scooter-orbit-track">
+                                <div class="scooter-mini">🛵💨</div>
+                            </div>
+                        </div>
+                        <div class="sensory-lick">
+                            <div class="tongue-shape"></div>
+                        </div>
                     </div>
 
-                    <form onsubmit="event.preventDefault(); triggerConfetti();">
+                    <div class="social-buttons">
+                        <button class="social-btn google-btn">
+                            <i class="fab fa-google"></i> Sign up with Google
+                        </button>
+                    </div>
+
+                    <div class="divider">OR</div>
+
+                    <form onsubmit="handleLogin(event)">
                         <div class="input-wrap">
                             <input type="text" required placeholder=" " autocomplete="off">
                             <label>Full Name</label>
-                            <div class="line"></div>
                         </div>
-                        
                         <div class="input-wrap">
                             <input type="email" required placeholder=" " autocomplete="off">
                             <label>Email Address</label>
-                            <div class="line"></div>
                         </div>
-
                         <div class="input-wrap">
                             <input type="password" required placeholder=" " autocomplete="off">
-                            <label>Set Password</label>
-                            <div class="line"></div>
+                            <label>Create Password</label>
                         </div>
-
-                        <button type="submit" class="chef-btn">
-                            <span>Start Eating</span>
-                        </button>
-
+                        
+                        <button class="chef-btn">Get Started</button>
+                        
                         <div class="footer-link">
-                            Already a member? <a onclick="switchForm('login')">Log In</a>
+                            Have an account? <a onclick="toggleAuth('login')">Log In</a>
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- 3. MAIN APPLICATION -->
+    <div id="app-layer">
+        <nav>
+            <div class="logo"><i class="fas fa-box-open"></i> Yummy Box</div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Menu</a></li>
+                <li><a href="#">Orders</a></li>
+                <li><a href="#">Offers</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </div>
+                <div class="user-avatar">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100" alt="User">
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Hungry?<br><span>We got you.</span></h1>
+                <p>Premium meals from top-tier chefs delivered to your doorstep in minutes. Experience the taste of luxury.</p>
+                <button class="chef-btn" style="width: auto; padding: 15px 40px;" onclick="document.querySelector('.menu-grid').scrollIntoView({behavior:'smooth'})">Explore Menu</button>
+            </div>
+        </section>
+
+        <div class="categories">
+            <span class="cat-pill active" onclick="filterMenu('all', this)">All</span>
+            <span class="cat-pill" onclick="filterMenu('burger', this)">Burgers</span>
+            <span class="cat-pill" onclick="filterMenu('pizza', this)">Pizza</span>
+            <span class="cat-pill" onclick="filterMenu('asian', this)">Asian</span>
+            <span class="cat-pill" onclick="filterMenu('dessert', this)">Dessert</span>
+        </div>
+
+        <div class="menu-grid" id="menu-grid">
+            <!-- Items injected by JS -->
+        </div>
+
+        <!-- Cart Drawer -->
+        <div class="cart-drawer" id="cart-drawer">
+            <div class="cart-header">
+                <h3>Your Order</h3>
+                <i class="fas fa-times" style="cursor:pointer" onclick="toggleCart()"></i>
+            </div>
+            <div class="cart-items" id="cart-items-container">
+                <p style="text-align:center; color:#555; margin-top:50px;">Your cart is empty.</p>
+            </div>
+            <div class="cart-total">
+                <div class="total-row">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button class="chef-btn">Checkout Now</button>
             </div>
         </div>
     </div>
 
     <canvas id="confetti-canvas"></canvas>
+
+    <!-- Link to JS -->
     <script src="script.js"></script>
 </body>
 </html>
